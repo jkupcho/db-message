@@ -1,18 +1,13 @@
 package com.hcat.azure.demo;
 
-import org.apache.logging.log4j.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @SpringBootApplication
 public class DbMessageApplication {
