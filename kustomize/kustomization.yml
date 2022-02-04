@@ -1,0 +1,9 @@
+namespace: development
+
+images:
+  - name: jkdevregistry.azurecr.io/db-message
+    newTag: v1.0.1
+
+resources:
+  - deployment.yml
+  - service.yml

@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-message
+  labels:
+    app: db-message
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: db-message
+      labels:
+        app: db-message
+    spec:
+      containers:
+        - name: db-message
+          image: jkdevregistry.azurecr.io/db-message
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "1"
+          env:
+            - name: OTEL_TRACES_EXPORTER
+              value: zipkin
+            - name: OTEL_EXPORTER_ZIPKIN_ENDPOINT
+              value: 'http://collector.linkerd-jaeger:9411/api/v2/spans'
+            - name: OTEL_PROPAGATORS
+              value: 'b3multi'
+            - name: OTEL_SERVICE_NAME
+              value: db-message
+          readinessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              port: 8080
+              path: /actuator/health
+          livenessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              port: 8080
+              path: /actuator/health
+          securityContext:
+            runAsUser: 1001
+            runAsGroup: 1001
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: db-message
