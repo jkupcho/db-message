@@ -48,8 +48,6 @@ public class DbMessageApplication {
     @Repository
     public class MessageRepository {
 
-        private final String getMessageByIdSql = "select message from message where message_id = :id";
-
         private final NamedParameterJdbcTemplate jdbcTemplate;
 
         @Autowired
@@ -61,6 +59,7 @@ public class DbMessageApplication {
             MapSqlParameterSource parameterSource = new MapSqlParameterSource();
             parameterSource.addValue("id", id);
 
+            String getMessageByIdSql = "SELECT message FROM message WHERE message_id = :id";
             return jdbcTemplate.queryForObject(getMessageByIdSql, parameterSource, (rs, rowNum) -> {
                 String message = rs.getString(1);
                 return new HelloMessage(message);
