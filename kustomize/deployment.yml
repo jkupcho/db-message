@@ -32,6 +32,9 @@ spec:
               value: 'b3multi'
             - name: OTEL_SERVICE_NAME
               value: db-message
+          envFrom:
+            - secretRef:
+                name: db-password
           readinessProbe:
             initialDelaySeconds: 10
             httpGet:
